@@ -1,0 +1,15 @@
+.container__featured {
+  width: 95%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container__featured__image {
+  position: relative;
+}
+
+.container__featured__image > img {
+  width: 100%;
+  height: auto;
+}

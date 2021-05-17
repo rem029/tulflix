@@ -1,0 +1,24 @@
+channelID:
+UCxhygwqQ1ZMoBGQM2yEcNug
+
+thumbnails video:
+https://i.ytimg.com/vi/h7y9wTEWthE/default.jpg
+https://i.ytimg.com/vi/h7y9wTEWthE/hqdefault.jpg
+https://i.ytimg.com/vi/h7y9wTEWthE/maxresdefault.jpg
+https://i.ytimg.com/vi/h7y9wTEWthE/mqdefault.jpg
+https://i.ytimg.com/vi/h7y9wTEWthE/sddefault.jpg
+
+playlist video:
+https://i.ytimg.com/vi/AEZ6uRYwR34/default.jpg
+https://i.ytimg.com/vi/AEZ6uRYwR34/hqdefault.jpg
+https://i.ytimg.com/vi/AEZ6uRYwR34/maxresdefault.jpg
+https://i.ytimg.com/vi/AEZ6uRYwR34/mqdefault.jpg
+https://i.ytimg.com/vi/AEZ6uRYwR34/sddefault.jpg
+
+playlist items video:
+https://i.ytimg.com/vi/AEZ6uRYwR34/default.jpg
+
+channel thumnail:
+https://yt3.ggpht.com/ytc/AAUvwnjzi8mwXf7SRtTAIyh54BfkhB_o97oLlfEAHPrPPA=s88-c-k-c0x00ffffff-no-rj
+https://yt3.ggpht.com/ytc/AAUvwnjzi8mwXf7SRtTAIyh54BfkhB_o97oLlfEAHPrPPA=s800-c-k-c0x00ffffff-no-rj
+https://yt3.ggpht.com/ytc/AAUvwnjzi8mwXf7SRtTAIyh54BfkhB_o97oLlfEAHPrPPA=s240-c-k-c0x00ffffff-no-rj
