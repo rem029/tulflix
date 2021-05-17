@@ -17,6 +17,8 @@ function App() {
   const [navBar, setNavBar] = useState(false);
   const [selectedVideo, setSelectedVideo] = useState(null);
 
+  const [testVideoID, setTestVideoID] = useState(null);
+
   useEffect(() => {
     console.log(DEFAULT_CONTEXT_API);
   }, []);
@@ -26,11 +28,11 @@ function App() {
   };
 
   const setSelectedVideobyId = (vidId) => {
-    console.log('SELECTED VID ID', vidId);
     if (vidId === null) {
       setSelectedVideo(null);
     } else {
       setSelectedVideo(contextApi.getVideoInfo(vidId));
+      setTestVideoID(vidId);
     }
   };
 
@@ -47,6 +49,7 @@ function App() {
           setSelectedVideo: setSelectedVideobyId,
           navBar: navBar,
           toggleNavBar: toggleNavBar,
+          testVideoID: testVideoID,
         }}
       >
         <div className="app">

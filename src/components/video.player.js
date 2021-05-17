@@ -1,4 +1,4 @@
-import '../../styles/video.player.css';
+import '../styles/video.player.css';
 
 const VideoPlayer = ({ videoID, title }) => (
   <div className="container">
