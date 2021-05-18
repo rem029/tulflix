@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/tulflix/static/css/main.d010e5a9.chunk.css",
-    "main.js": "/tulflix/static/js/main.8d9c80fa.chunk.js",
-    "main.js.map": "/tulflix/static/js/main.8d9c80fa.chunk.js.map",
+    "main.css": "/tulflix/static/css/main.5e45c069.chunk.css",
+    "main.js": "/tulflix/static/js/main.6be7f7a7.chunk.js",
+    "main.js.map": "/tulflix/static/js/main.6be7f7a7.chunk.js.map",
     "runtime-main.js": "/tulflix/static/js/runtime-main.d869f38b.js",
     "runtime-main.js.map": "/tulflix/static/js/runtime-main.d869f38b.js.map",
     "static/js/2.c1648922.chunk.js": "/tulflix/static/js/2.c1648922.chunk.js",
@@ -10,7 +10,7 @@
     "static/js/3.b6910b72.chunk.js": "/tulflix/static/js/3.b6910b72.chunk.js",
     "static/js/3.b6910b72.chunk.js.map": "/tulflix/static/js/3.b6910b72.chunk.js.map",
     "index.html": "/tulflix/index.html",
-    "static/css/main.d010e5a9.chunk.css.map": "/tulflix/static/css/main.d010e5a9.chunk.css.map",
+    "static/css/main.5e45c069.chunk.css.map": "/tulflix/static/css/main.5e45c069.chunk.css.map",
     "static/js/2.c1648922.chunk.js.LICENSE.txt": "/tulflix/static/js/2.c1648922.chunk.js.LICENSE.txt",
     "static/media/tulflix_logo-full.49b0b67c.png": "/tulflix/static/media/tulflix_logo-full.49b0b67c.png",
     "static/media/tulflix_logo-icon.93cc8c92.png": "/tulflix/static/media/tulflix_logo-icon.93cc8c92.png"
@@ -18,7 +18,7 @@
   "entrypoints": [
     "static/js/runtime-main.d869f38b.js",
     "static/js/2.c1648922.chunk.js",
-    "static/css/main.d010e5a9.chunk.css",
-    "static/js/main.8d9c80fa.chunk.js"
+    "static/css/main.5e45c069.chunk.css",
+    "static/js/main.6be7f7a7.chunk.js"
   ]
 }
