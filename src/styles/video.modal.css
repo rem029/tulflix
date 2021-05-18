@@ -1,16 +1,20 @@
 .container__video-modal {
   position: relative;
-  width: 95%;
-  transform: translateY(30px);
+  width: 85vw;
+  height: 90vh;
+
   box-sizing: border-box;
 
   background-color: #141414;
-  border-radius: 15px;
+  border-radius: 5px;
 
   display: flex;
   flex-direction: column;
+  overflow-y: scroll;
+}
 
-  overflow: hidden;
+.container__video-modal::-webkit-scrollbar {
+  display: none;
 }
 
 .container__video-modal__close-btn {
@@ -41,6 +45,8 @@
 
 .info-img {
   position: relative;
+  overflow: hidden;
+  border-radius: 5px 5px 0 0;
 }
 
 .info-img > img {
@@ -61,7 +67,7 @@
 
 .info-img-controls {
   position: absolute;
-  bottom: 25%;
+  bottom: 20%;
   left: 5%;
 
   display: flex;
@@ -74,7 +80,7 @@
   flex-flow: row nowrap;
   justify-content: center;
   align-items: center;
-  width: 180px;
+  width: 120px;
   background-color: #f5f5f1;
   color: #141414;
   font-size: 16px;
@@ -92,7 +98,7 @@
   flex-flow: row nowrap;
   align-items: center;
   justify-content: center;
-  width: 80px;
+  width: 40px;
 }
 
 .statistics-likes {
@@ -108,9 +114,16 @@
 .statistics-likes > p,
 .statistics-views > p {
   text-shadow: 1px 3px 7px rgba(137, 137, 137, 0.9);
-  font-size: 14px;
+  font-size: 10px;
   font-weight: bold;
   margin: 0 2px;
+}
+
+.info-text {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 10px 20px;
 }
 
 .info-text-date {
@@ -119,14 +132,8 @@
 }
 
 .info-text-date > p {
-  font-size: 18px;
+  font-size: 14px;
   font-weight: bold;
-}
-
-.info-text {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
 }
 
 .info-text > h2 {
@@ -151,15 +158,21 @@
 
 .info-desc {
   box-sizing: border-box;
-  padding: 10px 0;
+  margin-top: 10px;
+  padding: 2px;
   color: #f5f5f1;
-  background-color: #333;
+  /* background-color: #333; */
   border-radius: 5px;
-  font-size: 18px;
-  line-height: 25px;
-  text-align: justify;
-  height: 150px;
-  overflow-y: scroll;
+  font-size: 14px;
+  font-family: "Roboto";
+  width: 100%;
+  height: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: left;
+  align-items: flex-start;
 }
 
 .container__video-modal > button {

@@ -1,22 +1,22 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faPlay, faThumbsUp, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faPlay, faThumbsUp, faTimes } from "@fortawesome/free-solid-svg-icons";
 
-import TulflixIcon from '../assets/logo/tulflix_logo-icon.png';
+import TulflixIcon from "../assets/logo/tulflix_logo-icon.png";
 
-import ContextApp from '../context/context.app';
-import { DEFAULT_CONTEXT_API } from '../context/context.api';
-import abbreviateNum from '../utils/abbreviateNum';
+import ContextApp from "../context/context.app";
+import { DEFAULT_CONTEXT_API } from "../context/context.api";
+import abbreviateNum from "../utils/abbreviateNum";
 
-import Backdrop from './ui/backdrop';
+import Backdrop from "./ui/backdrop";
 
-import VideoPlayer from './video.player';
+import VideoPlayer from "./video.player";
 
-import '../styles/video.modal.css';
+import "../styles/video.modal.css";
 
 const VideoModal = ({ video }) => {
   const data = DEFAULT_CONTEXT_API.videoInfo;
-  console.log('video info', data);
-  console.log('passedtovideo', video);
+  console.log("video info", data);
+  console.log("passedtovideo", video);
   return (
     <ContextApp.Consumer>
       {({ setSelectedVideo, testVideoID }) => {
@@ -69,9 +69,10 @@ const VideoModal = ({ video }) => {
                     <h2>SERIES</h2>
                   </div>
                   <h2>{data.items[0].snippet.title}</h2>
+
+                  <pre className="info-desc">{data.items[0].snippet.description}</pre>
                 </div>
               </div>
-              <div className="info-desc">{data.items[0].snippet.description}</div>
             </div>
           </Backdrop>
         );
