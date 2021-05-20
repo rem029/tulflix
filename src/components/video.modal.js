@@ -1,25 +1,64 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faPlay, faThumbsUp, faTimes } from "@fortawesome/free-solid-svg-icons";
+import {
+  faEye,
+  faPlay,
+  faThumbsUp,
+  faTimes,
+} from "@fortawesome/free-solid-svg-icons";
 
 import TulflixIcon from "../assets/logo/tulflix_logo-icon.png";
 
 import ContextApp from "../context/context.app";
-import { DEFAULT_CONTEXT_API } from "../context/context.api";
 import abbreviateNum from "../utils/abbreviateNum";
 
 import Backdrop from "./ui/backdrop";
-
+import Spinner from "./ui/spinner";
 import VideoPlayer from "./video.player";
 
 import "../styles/video.modal.css";
+import ytAPI from "../helpers/ytAPI";
+import { useEffect, useState } from "react";
 
-const VideoModal = ({ video }) => {
-  const data = DEFAULT_CONTEXT_API.videoInfo;
-  console.log("video info", data);
-  console.log("passedtovideo", video);
+const VideoModal = ({ videoId }) => {
+  const [data, setData] = useState({
+    id: "",
+    title: "",
+    imgUrl: "",
+    datePublished: new Date(),
+    likeCount: "",
+    viewCount: "",
+    description: "",
+  });
+
+  const video = ytAPI.GetVideoInfo(videoId);
+
+  useEffect(() => {
+    if (
+      !video.loading &&
+      video.result !== null &&
+      video.error === null &&
+      data.id === ""
+    ) {
+      setData({
+        id: video.result[0].id,
+        title: video.result[0].snippet.title,
+        imgUrl: video.result[0].snippet.thumbnails.maxres.url,
+        datePublished: new Date(video.result[0].snippet.publishedAt),
+        likeCount: abbreviateNum(video.result[0].statistics.likeCount),
+        viewCount: abbreviateNum(video.result[0].statistics.viewCount),
+        description: video.result[0].snippet.description,
+      });
+
+      console.log("ytAPI", video.result[0]);
+    }
+    console.log("video useEffect");
+  }, [video, data]);
+
+  console.log("video modal");
+
   return (
     <ContextApp.Consumer>
-      {({ setSelectedVideo, testVideoID }) => {
+      {({ setSelectedVideo }) => {
         return (
           <Backdrop>
             <div className="container__video-modal">
@@ -36,9 +75,9 @@ const VideoModal = ({ video }) => {
               <div className="container__video-modal__info">
                 <div className="info-img">
                   <div className="info-img-overlay">
-                    <VideoPlayer videoID={testVideoID} title={data.items[0].snippet.title} />
+                    <VideoPlayer videoID={data.id} title={data.title} />
                   </div>
-                  <img src={data.items[0].snippet.thumbnails.maxres.url} alt={data.items[0].snippet.title} />
+                  <img src={data.imgUrl} alt={data.title} />
 
                   <div className="info-img-controls">
                     <button>
@@ -49,29 +88,33 @@ const VideoModal = ({ video }) => {
                       <p>
                         <FontAwesomeIcon icon={faThumbsUp} />
                       </p>
-                      <p>{abbreviateNum(data.items[0].statistics.likeCount)}</p>
+                      <p>{data.likeCount}</p>
                     </div>
                     <div className="info-text-statistics statistics-views">
                       <p>
                         <FontAwesomeIcon icon={faEye} />
                       </p>
-                      <p>{abbreviateNum(data.items[0].statistics.viewCount)}</p>
+                      <p>{data.viewCount}</p>
                     </div>
                   </div>
                 </div>
 
-                <div className="info-text">
-                  <div className="info-text-date">
-                    <p>{new Date(data.items[0].snippet.publishedAt).toDateString()}</p>
-                  </div>
-                  <div className="info-text-t-series">
-                    <img src={TulflixIcon} alt={TulflixIcon} />
-                    <h2>SERIES</h2>
-                  </div>
-                  <h2>{data.items[0].snippet.title}</h2>
+                {video.loading ? (
+                  <Spinner className={"spinner-lg"} />
+                ) : (
+                  <div className="info-text">
+                    <div className="info-text-date">
+                      <p>{data.datePublished.toString()}</p>
+                    </div>
+                    <div className="info-text-t-series">
+                      <img src={TulflixIcon} alt={TulflixIcon} />
+                      <h2>SERIES</h2>
+                    </div>
+                    <h2>{data.title}</h2>
 
-                  <pre className="info-desc">{data.items[0].snippet.description}</pre>
-                </div>
+                    <pre className="info-desc">{data.description}</pre>
+                  </div>
+                )}
               </div>
             </div>
           </Backdrop>

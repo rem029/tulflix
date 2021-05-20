@@ -1,27 +1,55 @@
-import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons';
+import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCaretDown, faCaretUp } from "@fortawesome/free-solid-svg-icons";
 
-import NavBarLink from '../components/navbar.link';
+import NavBarLink from "../components/navbar.link";
 
-import ContextApp from '../context/context.app.js';
-import ContextApi from '../context/context.api';
+import ContextApp from "../context/context.app.js";
 
-import '../styles/navbar.css';
+import "../styles/navbar.css";
+import Spinner from "./ui/spinner";
 
 const NavBar = () => {
   return (
     <ContextApp.Consumer>
-      {({ navBar, toggleNavBar, activePlaylist, setSelectedVideoId }) => {
-        const navBarStyle = navBar ? 'navbar navbar-open' : 'navbar';
-        const navBarArrow = navBar ? 'container__navbar__arrow arrow-up' : 'container__navbar__arrow';
+      {({
+        navBar,
+        toggleNavBar,
+        activePlaylist,
+        setSelectedVideo,
+        playlists,
+      }) => {
+        const navBarStyle = navBar ? "navbar navbar-open" : "navbar";
+        const navBarArrow = navBar
+          ? "container__navbar__arrow arrow-up"
+          : "container__navbar__arrow";
+
+        /* LOAD PLAYLIST */
+
+        const list =
+          playlists.length > 0 ? (
+            playlists.map((item) => {
+              return (
+                <NavBarLink
+                  key={item.id}
+                  playlistId={item.id}
+                  src="src"
+                  text={item.snippet.title}
+                  isActive={item.id === activePlaylist}
+                />
+              );
+            })
+          ) : (
+            <Spinner className="spinner-sm" />
+          );
+
         return (
           <div className="container__navbar">
             <button
               onClick={(e) => {
                 e.preventDefault();
                 toggleNavBar();
-                setSelectedVideoId(null);
+                setSelectedVideo(null);
               }}
             >
               Browse
@@ -35,24 +63,7 @@ const NavBar = () => {
                 <FontAwesomeIcon icon={faCaretUp} />
               </em>
               <nav>
-                <ul>
-                  <ContextApi.Consumer>
-                    {({ playlists }) => {
-                      const list = playlists.items.map((item) => {
-                        return (
-                          <NavBarLink
-                            key={item.id}
-                            playlistId={item.id}
-                            src="src"
-                            text={item.snippet.title}
-                            isActive={item.id === activePlaylist}
-                          />
-                        );
-                      });
-                      return <React.Fragment>{list}</React.Fragment>;
-                    }}
-                  </ContextApi.Consumer>
-                </ul>
+                <ul>{list}</ul>
               </nav>
             </div>
           </div>

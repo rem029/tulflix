@@ -1,23 +1,28 @@
-import React from 'react';
-import ContextApi from '../../context/context.api';
+import React from "react";
 
-import '../../styles/featured.css';
+import Spinner from "../ui/spinner";
+
+import "../../styles/featured.css";
+
+import ContextApp from "../../context/context.app";
 
 const Featured = () => {
   return (
     <div className="container__featured">
-      <ContextApi.Consumer>
-        {(context) => {
-          return (
-            <div className="container__featured__image">
+      <div className="container__featured__image">
+        <ContextApp.Consumer>
+          {({ channel }) => {
+            return channel.length > 0 ? (
               <img
-                src={context.channelInfo.items[0].snippet.thumbnails.high.url}
-                alt={context.channelInfo.items[0].snippet.customUrl}
+                src={channel[0].snippet.thumbnails.high.url}
+                alt={channel[0].snippet.customUrl}
               />
-            </div>
-          );
-        }}
-      </ContextApi.Consumer>
+            ) : (
+              <Spinner className="spinner-lg" />
+            );
+          }}
+        </ContextApp.Consumer>
+      </div>
     </div>
   );
 };

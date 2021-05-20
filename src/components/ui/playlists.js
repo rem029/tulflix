@@ -1,24 +1,33 @@
-import React from 'react';
+import React from "react";
 
-import Playlist from '../playlist';
-import ContextAPI from '../../context/context.api';
+import Playlist from "../playlist";
+import Spinner from "../ui/spinner";
+import ContextApp from "../../context/context.app";
 
-import '../../styles/playlists.css';
+import "../../styles/playlists.css";
 
 const Playlists = () => {
   return (
     <div className="container__playlists">
-      <ContextAPI.Consumer>
+      <ContextApp.Consumer>
         {({ playlists }) => {
-          return (
+          return playlists.length > 0 ? (
             <React.Fragment>
-              {playlists.items.map((item) => {
-                return <Playlist key={item.id} title={item.snippet.localized.title} playlistId={item.id} />;
+              {playlists.map((item) => {
+                return (
+                  <Playlist
+                    key={item.id}
+                    title={item.snippet.localized.title}
+                    playlistId={item.id}
+                  />
+                );
               })}
             </React.Fragment>
+          ) : (
+            <Spinner className="spinner-lg" />
           );
         }}
-      </ContextAPI.Consumer>
+      </ContextApp.Consumer>
     </div>
   );
 };

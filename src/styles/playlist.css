@@ -16,16 +16,19 @@
   margin: 15px 5px;
   display: flex;
   flex-direction: row;
-
   justify-content: left;
   align-items: center;
   cursor: pointer;
   height: 24px;
-  width: 180px;
+  width: fit-content;
 }
 .container_playlist-title > h2 {
   color: #f5f5f1;
-  font-size: 16px;
+  font-size: 12px;
+  width: fit-content;
+  display: inline-block;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .container_playlist-title__sub-text {
@@ -34,6 +37,7 @@
   width: 0;
   color: #f5f5f100;
   overflow: hidden;
+  display: inline-block;
   text-overflow: clip;
   white-space: nowrap;
   transition: all 0.5s ease-in-out;
@@ -47,7 +51,7 @@
 }
 
 .container_playlist-title:hover > .container_playlist-title__sub-text {
-  width: 40px;
+  width: 100%;
   color: #f5f5f1;
   transform: translateX(0);
 }

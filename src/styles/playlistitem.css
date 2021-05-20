@@ -1,6 +1,5 @@
 .container__playlistitem {
   position: relative;
-  width: 40%;
   min-width: 210px;
   height: 118px;
   margin: 0 5px;

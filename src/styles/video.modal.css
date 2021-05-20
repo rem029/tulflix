@@ -1,6 +1,6 @@
 .container__video-modal {
   position: relative;
-  width: 85vw;
+  width: 98vw;
   height: 90vh;
 
   box-sizing: border-box;
@@ -31,6 +31,11 @@
   background-color: #141414b6;
   color: #f5f5f1;
   font-size: 18px;
+
+  display: flex;
+  flex-wrap: row nowrap;
+  justify-content: center;
+  align-items: center;
 }
 
 .container__video-modal__info {

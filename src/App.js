@@ -1,61 +1,98 @@
-import ReactDOM from 'react-dom';
-import { useContext, useEffect, useState } from 'react';
+import ReactDOM from "react-dom";
+import { useEffect, useState } from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import './styles/app.css';
+import "./styles/app.css";
 
-import Header from './components/ui/header';
+import Header from "./components/ui/header";
 
-import Homepage from './components/pages/home.page';
+import Homepage from "./components/pages/home.page";
 
-import VideoModal from './components/video.modal';
+import VideoModal from "./components/video.modal";
 
-import ContextAPI, { DEFAULT_CONTEXT_API } from './context/context.api';
-import ContextApp, { DEFAULT_CONTEXT_APP } from './context/context.app';
+import ContextAPI, { DEFAULT_CONTEXT_API } from "./context/context.api";
+import ContextApp, { DEFAULT_CONTEXT_APP } from "./context/context.app";
+
+import ytAPI from "./helpers/ytAPI";
 
 function App() {
-  const contextApi = useContext(ContextAPI);
   const [navBar, setNavBar] = useState(false);
-  const [selectedVideo, setSelectedVideo] = useState(null);
+  const [selectedVideoId, setSelectedVideoId] = useState(null);
+  const [channel, setChannel] = useState([]);
+  const [playlists, setPlaylists] = useState([]);
+  const [playlistItems, setPlaylistItems] = useState([]);
 
-  const [testVideoID, setTestVideoID] = useState(null);
+  const getChannel = ytAPI.GetChannelInfo();
+  const getPlaylists = ytAPI.GetPlaylists();
 
+  // Load channel
   useEffect(() => {
-    console.log(DEFAULT_CONTEXT_API);
-  }, []);
+    if (
+      (!getChannel.loading && getChannel.result && channel.length === 0) ||
+      getChannel.error
+    ) {
+      setChannel(getChannel.result);
+      console.log("getChannel", getChannel.result);
+    }
+  }, [getChannel, channel]);
+
+  // Load playlists
+  useEffect(() => {
+    if (
+      (!getPlaylists.loading &&
+        getPlaylists.result &&
+        playlists.length === 0) ||
+      getPlaylists.error
+    ) {
+      setPlaylists(getPlaylists.result);
+      console.log("getPlaylists", getPlaylists.result);
+    }
+  }, [getPlaylists, playlists]);
 
   const toggleNavBar = () => {
     setNavBar((state) => !state);
   };
 
-  const setSelectedVideobyId = (vidId) => {
+  const onSelectVideo = (vidId) => {
     if (vidId === null) {
-      setSelectedVideo(null);
+      setSelectedVideoId(null);
     } else {
-      setSelectedVideo(contextApi.getVideoInfo(vidId));
-      setTestVideoID(vidId);
+      setSelectedVideoId(vidId);
     }
   };
 
   const videoInfo =
-    selectedVideo !== null &&
-    ReactDOM.createPortal(<VideoModal video={selectedVideo} />, document.getElementById('root-video-info'));
+    selectedVideoId !== null &&
+    ReactDOM.createPortal(
+      <VideoModal videoId={selectedVideoId} />,
+      document.getElementById("root-video-info")
+    );
 
   return (
     <ContextAPI.Provider value={DEFAULT_CONTEXT_API}>
       <ContextApp.Provider
         value={{
           ...DEFAULT_CONTEXT_APP,
-          selectedVideo: selectedVideo,
-          setSelectedVideo: setSelectedVideobyId,
+          selectedVideoId: selectedVideoId,
+          setSelectedVideo: onSelectVideo,
           navBar: navBar,
           toggleNavBar: toggleNavBar,
-          testVideoID: testVideoID,
+          channel: channel,
+          playlists: playlists,
         }}
       >
         <div className="app">
-          <Header />
-          <Homepage />
+          <Router basename={"/"}>
+            <Header />
+
+            <Switch>
+              <Route path="/">
+                <Homepage />
+              </Route>
+            </Switch>
+          </Router>
         </div>
+
         {videoInfo}
       </ContextApp.Provider>
     </ContextAPI.Provider>
