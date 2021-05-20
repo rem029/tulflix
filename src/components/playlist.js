@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -9,13 +9,14 @@ import {
 
 import PlaylistItem from "./playlist.items";
 
-import ContextAPI from "../context/context.api";
 import ytApi from "../helpers/ytAPI.js";
 
 import "../styles/playlist.css";
+import ContextApp from "../context/context.app";
 
 const Playlist = ({ title, playlistId }) => {
   const playListItemRef = useRef(null);
+  const contextApp = useContext(ContextApp);
   const [scrolled, setScrolled] = useState(false);
   const [playlistitems, setPlaylistItems] = useState([]);
 
@@ -24,8 +25,9 @@ const Playlist = ({ title, playlistId }) => {
   useEffect(() => {
     if (!getPlaylistItems.loading && playlistitems.length === 0) {
       setPlaylistItems(getPlaylistItems.result);
+      contextApp.addToPlaylistItems([...getPlaylistItems.result]);
     }
-  }, [playlistitems, getPlaylistItems]);
+  }, [playlistitems, getPlaylistItems, contextApp]);
 
   const nextPage = (e) => {
     e.preventDefault();

@@ -10,6 +10,7 @@ export const DEFAULT_CONTEXT_APP = {
   channel: [],
   playlists: [],
   playlistItems: [],
+  addToPlaylistItems: () => {},
 };
 
 export default createContext(DEFAULT_CONTEXT_APP);

@@ -49,7 +49,16 @@ function App() {
     }
   }, [getPlaylists, playlists]);
 
-  const toggleNavBar = () => {
+  // Load playlists items
+  useEffect(() => {
+    console.log("current items", playlistItems);
+  }, [playlistItems]);
+
+  const onAddPlaylistItem = (items) => {
+    setPlaylistItems((state) => [...state, ...items]);
+  };
+
+  const onToggleNavBar = () => {
     setNavBar((state) => !state);
   };
 
@@ -76,9 +85,11 @@ function App() {
           selectedVideoId: selectedVideoId,
           setSelectedVideo: onSelectVideo,
           navBar: navBar,
-          toggleNavBar: toggleNavBar,
+          toggleNavBar: onToggleNavBar,
           channel: channel,
           playlists: playlists,
+          playlistItems: playlistItems,
+          addToPlaylistItems: onAddPlaylistItem,
         }}
       >
         <div className="app">
