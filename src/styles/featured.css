@@ -1,15 +1,39 @@
 .container__featured {
-  width: 95%;
+  width: 100%;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  margin: auto;
+}
+
+.container__featured__video {
+  position: relative;
+  width: 100vw;
+  display: flex;
+  margin: auto;
 }
 
 .container__featured__image {
   position: relative;
+  display: flex;
+  margin: auto;
+  justify-content: center;
+  align-items: center;
 }
 
 .container__featured__image > img {
-  width: 100%;
+  width: 95%;
   height: auto;
+}
+
+.container__featured__loading {
+  display: flex;
+  margin: auto;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+@media screen and (min-width: 1325px) {
+  .container__featured__video {
+    width: 85vw;
+  }
 }

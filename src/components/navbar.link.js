@@ -2,7 +2,7 @@ import '../styles/navbar.link.css';
 
 import ContextApp from '../context/context.app';
 
-const NavBarLink = ({ playlistId, src, text, isActive }) => {
+const NavBarLink = ({ playlistId, href, text, isActive }) => {
   const navbarLinkStyle = isActive ? 'navbar-link navbar-link-active' : 'navbar-link';
   const scrollToView = (e) => {
     e.preventDefault();
@@ -10,14 +10,14 @@ const NavBarLink = ({ playlistId, src, text, isActive }) => {
   };
   return (
     <ContextApp.Consumer>
-      {({ toggleNavBar, setSelectedVideoId }) => {
+      {({ toggleNavBar, setSelectedVideo }) => {
         return (
           <li className={navbarLinkStyle}>
             <a
-              href={src}
+              href={href}
               onClick={(e) => {
                 scrollToView(e);
-                setSelectedVideoId(null);
+                setSelectedVideo(null);
                 toggleNavBar();
               }}
             >

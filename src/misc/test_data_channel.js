@@ -1,4 +1,4 @@
-export const DATA_CHANNELS = {
+export const DATA_CHANNEL = {
   kind: 'youtube#channelListResponse',
   etag: 'HIZH024lKw-BlE3VfXUvKTxvtSU',
   pageInfo: {

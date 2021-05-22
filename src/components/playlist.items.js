@@ -3,6 +3,9 @@ import '../styles/playlistitem.css';
 import ContextApp from '../context/context.app';
 
 const PlaylistItem = ({ videoID, imgUrl }) => {
+  if (!videoID || !imgUrl) {
+    return null;
+  }
   return (
     <ContextApp.Consumer>
       {({ setSelectedVideo }) => {

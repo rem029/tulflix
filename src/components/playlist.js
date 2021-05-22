@@ -1,73 +1,84 @@
-import React, { useState, useRef, useEffect, useContext } from "react";
+import React, { useState, useRef, useEffect, useContext } from 'react';
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faAngleRight,
-  faChevronRight,
-  faChevronLeft,
-} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAngleRight, faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 
-import PlaylistItem from "./playlist.items";
+import PlaylistItem from './playlist.items';
 
-import ytApi from "../helpers/ytAPI.js";
+import ytApi from '../helpers/ytAPI.js';
 
-import "../styles/playlist.css";
-import ContextApp from "../context/context.app";
+import '../styles/playlist.css';
+import ContextApp from '../context/context.app';
 
-const Playlist = ({ title, playlistId }) => {
-  const playListItemRef = useRef(null);
+const Playlist = ({ title, playlistId, items = [] }) => {
+  const playListItemsRef = useRef(null);
   const contextApp = useContext(ContextApp);
   const [scrolled, setScrolled] = useState(false);
-  const [playlistitems, setPlaylistItems] = useState([]);
+  const [playlistItems, setPlaylistItems] = useState(items);
 
-  const getPlaylistItems = ytApi.GetPlaylistItems(playlistId);
+  const getPlaylistItems = loadPlaylistItems(playlistId, items);
 
   useEffect(() => {
-    if (!getPlaylistItems.loading && playlistitems.length === 0) {
-      setPlaylistItems(getPlaylistItems.result);
-      contextApp.addToPlaylistItems([...getPlaylistItems.result]);
+    if (!getPlaylistItems.loading && playlistItems.length === 0) {
+      setPlaylistItems(getPlaylistItems.results);
+      // contextApp.addToPlaylistItems([...getPlaylistItems.results]);
     }
-  }, [playlistitems, getPlaylistItems, contextApp]);
+  }, [playlistItems, contextApp, items, getPlaylistItems]);
+
+  useEffect(() => {
+    window.addEventListener('resize', onWindowResize);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [playListItemsRef]);
 
   const nextPage = (e) => {
     e.preventDefault();
-    playListItemRef.current.scrollTo({
-      behavior: "smooth",
-      left: window.innerWidth + playListItemRef.current.scrollLeft,
+    playListItemsRef.current.scrollTo({
+      behavior: 'smooth',
+      left: window.innerWidth + playListItemsRef.current.scrollLeft,
     });
-    console.log(playListItemRef.current.scrollLeft);
   };
 
   const prevPage = (e) => {
     e.preventDefault();
-    playListItemRef.current.scrollTo({
-      behavior: "smooth",
-      left: playListItemRef.current.scrollLeft - window.innerWidth,
+    playListItemsRef.current.scrollTo({
+      behavior: 'smooth',
+      left: playListItemsRef.current.scrollLeft - window.innerWidth,
     });
   };
 
   const onScrollPage = (e) => {
-    console.log(e.target.scrollLeft);
     setScrolled(e.target.scrollLeft > 0);
   };
+
+  const onWindowResize = (e) => {
+    //
+    //
+    //
+    //
+  };
+
+  let showScrollNext = true;
+
+  try {
+    showScrollNext = playListItemsRef.current.scrollWidth > window.innerWidth;
+  } catch {
+    showScrollNext = true;
+  }
 
   return (
     <div className="container_playlist">
       {scrolled && (
-        <button
-          onClick={(e) => prevPage(e)}
-          className="container__playlist__control control-left"
-        >
+        <button onClick={(e) => prevPage(e)} className="container__playlist__control control-left">
           <FontAwesomeIcon icon={faChevronLeft} />
         </button>
       )}
 
-      <button
-        onClick={(e) => nextPage(e)}
-        className="container__playlist__control control-right"
-      >
-        <FontAwesomeIcon icon={faChevronRight} />
-      </button>
+      {showScrollNext && (
+        <button onClick={(e) => nextPage(e)} className="container__playlist__control control-right">
+          <FontAwesomeIcon icon={faChevronRight} />
+        </button>
+      )}
+
       <div className="container_playlist-title">
         <h2>{title}</h2>
         <div className="container_playlist-title__sub-text">Explore all</div>
@@ -78,25 +89,33 @@ const Playlist = ({ title, playlistId }) => {
       <div
         className="container_playlist-items"
         id={`#${playlistId}`}
-        ref={playListItemRef}
+        ref={playListItemsRef}
         onScroll={(e) => {
           onScrollPage(e);
         }}
       >
         <React.Fragment>
-          {playlistitems.map((item, index) => {
+          {playlistItems.map((item, index) => {
             let currentItem;
 
             /* DONT RENDER PRIVATE AND DELETED VIDEO */
             try {
-              currentItem = (
-                <PlaylistItem
-                  key={item.snippet.resourceId.videoId + index}
-                  videoID={item.snippet.resourceId.videoId}
-                  imgUrl={item.snippet.thumbnails.medium.url}
-                  title={item.snippet.title}
-                />
-              );
+              currentItem =
+                items.length > 0 ? (
+                  <PlaylistItem
+                    key={item.contentDetails.upload.videoId + index}
+                    videoID={item.contentDetails.upload.videoId}
+                    imgUrl={item.snippet.thumbnails.medium.url}
+                    title={item.snippet.title}
+                  />
+                ) : (
+                  <PlaylistItem
+                    key={item.snippet.resourceId.videoId + index}
+                    videoID={item.snippet.resourceId.videoId}
+                    imgUrl={item.snippet.thumbnails.medium.url}
+                    title={item.snippet.title}
+                  />
+                );
             } catch {
               currentItem = null;
             }
@@ -109,6 +128,14 @@ const Playlist = ({ title, playlistId }) => {
       </div>
     </div>
   );
+};
+
+const loadPlaylistItems = (playlistId, items) => {
+  if (items.length > 0) {
+    return { loading: false, results: items, error: null };
+  } else {
+    return ytApi.GetPlaylistItems(playlistId);
+  }
 };
 
 export default Playlist;

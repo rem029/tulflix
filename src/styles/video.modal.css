@@ -36,6 +36,7 @@
   flex-wrap: row nowrap;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 
 .container__video-modal__info {
@@ -70,17 +71,7 @@
   background: linear-gradient(180deg, rgba(0, 0, 0, 0.616) 0%, rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, 0.644) 100%);
 }
 
-.info-img-controls {
-  position: absolute;
-  bottom: 20%;
-  left: 5%;
-
-  display: flex;
-  flex-flow: row nowrap;
-  height: 38px;
-}
-
-.info-img-controls > button {
+.info-text-statistics > button {
   display: flex;
   flex-flow: row nowrap;
   justify-content: center;
@@ -92,35 +83,30 @@
   border-radius: 5px;
 }
 
-.info-img-controls > button > p {
-  color: #141414;
-  font-size: 14px;
-  font-weight: bold;
-}
-
 .info-text-statistics {
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
-  justify-content: center;
-  width: 40px;
-}
-
-.statistics-likes {
-  background-color: #1414142c;
-  border-right: 2px solid #f5f5f1;
+  height: fit-content;
+  margin: 0 2px;
+  border: 1px solid #f5f5f1;
 }
 
 .statistics-views {
   background-color: #1414142c;
-  border-right: 2px solid #f5f5f1;
 }
 
-.statistics-likes > p,
-.statistics-views > p {
+.statistics-likes > p:nth-child(1),
+.statistics-views > p:nth-child(1) {
   text-shadow: 1px 3px 7px rgba(137, 137, 137, 0.9);
-  font-size: 10px;
-  font-weight: bold;
+  font-size: 16px;
+  margin: 0 2px;
+}
+
+.statistics-likes > p:nth-child(2),
+.statistics-views > p:nth-child(2) {
+  text-shadow: 1px 3px 7px rgba(137, 137, 137, 0.9);
+  font-size: 14px;
   margin: 0 2px;
 }
 
@@ -134,6 +120,7 @@
 .info-text-date {
   display: flex;
   flex-flow: row nowrap;
+  align-items: center;
 }
 
 .info-text-date > p {
@@ -166,10 +153,10 @@
   margin-top: 10px;
   padding: 2px;
   color: #f5f5f1;
-  /* background-color: #333; */
+  background-color: #242424;
   border-radius: 5px;
   font-size: 14px;
-  font-family: "Roboto";
+  font-family: 'Roboto';
   width: 100%;
   height: auto;
   white-space: pre-wrap;
@@ -178,15 +165,4 @@
   flex-flow: row nowrap;
   justify-content: left;
   align-items: flex-start;
-}
-
-.container__video-modal > button {
-  margin: 5px 0;
-  width: 100%;
-  height: 36px;
-  border-radius: 5px;
-  background-color: #f5f5f1;
-}
-
-@media screen and (min-width: 700px) {
 }

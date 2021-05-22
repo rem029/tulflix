@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const useAxios = (method, url) => {
   const [loading, setLoading] = useState(true);
@@ -20,8 +20,8 @@ const useAxios = (method, url) => {
   };
 
   useEffect(() => {
-    console.log("AXIOS EFFECT");
     fetchData();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

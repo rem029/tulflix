@@ -72,17 +72,3 @@
   justify-content: center;
   align-items: center;
 }
-
-.navbar > nav > ul > li {
-  text-decoration: none;
-  list-style-type: none;
-
-  box-sizing: border-box;
-  width: 100%;
-  transition: all 0.5s;
-}
-
-.navbar > nav > ul > li:hover {
-  background-color: #c5c3c371;
-  font-weight: bold;
-}

@@ -1,113 +1,97 @@
-import ReactDOM from "react-dom";
-import { useEffect, useState } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import ReactDOM from 'react-dom';
+import { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import "./styles/app.css";
+import './styles/app.css';
 
-import Header from "./components/ui/header";
+import Header from './components/ui/header';
+import Homepage from './components/pages/home.page';
+import VideoModal from './components/video.modal';
+import ytAPI from './helpers/ytAPI';
 
-import Homepage from "./components/pages/home.page";
-
-import VideoModal from "./components/video.modal";
-
-import ContextAPI, { DEFAULT_CONTEXT_API } from "./context/context.api";
-import ContextApp, { DEFAULT_CONTEXT_APP } from "./context/context.app";
-
-import ytAPI from "./helpers/ytAPI";
+import ContextApp, { DEFAULT_CONTEXT_APP } from './context/context.app';
 
 function App() {
   const [navBar, setNavBar] = useState(false);
   const [selectedVideoId, setSelectedVideoId] = useState(null);
-  const [channel, setChannel] = useState([]);
-  const [playlists, setPlaylists] = useState([]);
+
+  const [channel, setChannel] = useState({ loaded: false, ...DEFAULT_CONTEXT_APP.channel });
+  const [channelActivities, setChannelActivities] = useState({
+    loaded: false,
+    ...DEFAULT_CONTEXT_APP.channelActivities,
+  });
+  const [playlists, setPlaylists] = useState({
+    loaded: false,
+    ...DEFAULT_CONTEXT_APP.playlists,
+  });
   const [playlistItems, setPlaylistItems] = useState([]);
+
+  useEffect(() => {}, [channel, channelActivities, playlists]);
+
+  useEffect(() => {}, [playlistItems]);
+
+  const onAddPlaylistItem = (items) => setPlaylistItems((prevState) => [...prevState, ...items]);
+
+  const onToggleNavBar = () => setNavBar((state) => !state);
+
+  const onSelectVideo = (vidId) => setSelectedVideoId(vidId);
+
+  const updateChannel = (state) => setChannel(state);
+  const updateChannelActivities = (state) => setChannelActivities(state);
+  const updatePlaylists = (state) => setPlaylists(state);
 
   const getChannel = ytAPI.GetChannelInfo();
   const getPlaylists = ytAPI.GetPlaylists();
+  const getChannelActivities = ytAPI.GetChannelActivity();
 
-  // Load channel
-  useEffect(() => {
-    if (
-      (!getChannel.loading && getChannel.result && channel.length === 0) ||
-      getChannel.error
-    ) {
-      setChannel(getChannel.result);
-      console.log("getChannel", getChannel.result);
-    }
-  }, [getChannel, channel]);
-
-  // Load playlists
-  useEffect(() => {
-    if (
-      (!getPlaylists.loading &&
-        getPlaylists.result &&
-        playlists.length === 0) ||
-      getPlaylists.error
-    ) {
-      setPlaylists(getPlaylists.result);
-      console.log("getPlaylists", getPlaylists.result);
-    }
-  }, [getPlaylists, playlists]);
-
-  // Load playlists items
-  useEffect(() => {
-    console.log("current items", playlistItems);
-  }, [playlistItems]);
-
-  const onAddPlaylistItem = (items) => {
-    setPlaylistItems((state) => [...state, ...items]);
-  };
-
-  const onToggleNavBar = () => {
-    setNavBar((state) => !state);
-  };
-
-  const onSelectVideo = (vidId) => {
-    if (vidId === null) {
-      setSelectedVideoId(null);
-    } else {
-      setSelectedVideoId(vidId);
-    }
-  };
+  LoadDataFromYtAPI(getChannel, channel, updateChannel);
+  LoadDataFromYtAPI(getChannelActivities, channelActivities, updateChannelActivities);
+  LoadDataFromYtAPI(getPlaylists, playlists, updatePlaylists);
 
   const videoInfo =
     selectedVideoId !== null &&
-    ReactDOM.createPortal(
-      <VideoModal videoId={selectedVideoId} />,
-      document.getElementById("root-video-info")
-    );
+    ReactDOM.createPortal(<VideoModal videoId={selectedVideoId} />, document.getElementById('root-video-info'));
 
   return (
-    <ContextAPI.Provider value={DEFAULT_CONTEXT_API}>
-      <ContextApp.Provider
-        value={{
-          ...DEFAULT_CONTEXT_APP,
-          selectedVideoId: selectedVideoId,
-          setSelectedVideo: onSelectVideo,
-          navBar: navBar,
-          toggleNavBar: onToggleNavBar,
-          channel: channel,
-          playlists: playlists,
-          playlistItems: playlistItems,
-          addToPlaylistItems: onAddPlaylistItem,
-        }}
-      >
-        <div className="app">
-          <Router basename={"/"}>
-            <Header />
+    <ContextApp.Provider
+      value={{
+        ...DEFAULT_CONTEXT_APP,
+        selectedVideoId: selectedVideoId,
+        setSelectedVideo: onSelectVideo,
+        navBar: navBar,
+        toggleNavBar: onToggleNavBar,
+        channel: channel,
+        channelActivities: channelActivities,
+        playlists: playlists,
+        playlistItems: playlistItems,
+        addToPlaylistItems: onAddPlaylistItem,
+      }}
+    >
+      <div className="app">
+        <Router basename={'/'}>
+          <Header />
 
-            <Switch>
-              <Route path="/">
-                <Homepage />
-              </Route>
-            </Switch>
-          </Router>
-        </div>
+          <Switch>
+            <Route path="/">
+              <Homepage />
+            </Route>
+          </Switch>
+        </Router>
+      </div>
 
-        {videoInfo}
-      </ContextApp.Provider>
-    </ContextAPI.Provider>
+      {videoInfo}
+    </ContextApp.Provider>
   );
 }
+
+const LoadDataFromYtAPI = (data, state, setState) => {
+  useEffect(() => {
+    if (!state.loaded) {
+      if ((!data.loading && data.results.length > 0) || data.error) {
+        setState({ loaded: true, loading: data.loading, results: data.results, error: data.error });
+      }
+    }
+  }, [data, state, setState]);
+};
 
 export default App;
