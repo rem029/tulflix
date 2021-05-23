@@ -1,8 +1,17 @@
-.container {
+.container__videoplayer {
   position: relative;
   overflow: hidden;
   width: 100%;
   padding-top: 56.25%;
+}
+
+.container__loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  margin: auto;
 }
 
 .iframe-responsive {

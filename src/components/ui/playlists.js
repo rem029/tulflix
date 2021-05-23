@@ -9,12 +9,16 @@ import '../../styles/playlists.css';
 const Playlists = () => {
   return (
     <ContextApp.Consumer>
-      {({ playlists, channelActivities }) => {
+      {({ playlists, channelActivities, manualIds }) => {
         return (
           <div className="container__playlists">
             {!channelActivities.loading ? (
               <React.Fragment>
-                <Playlist title={'RECENT UPLOADS'} playlistId={0} items={channelActivities.results} />;
+                <Playlist
+                  title={manualIds.recentUploads.title}
+                  playlistId={manualIds.recentUploads.id}
+                  items={channelActivities.results}
+                />
               </React.Fragment>
             ) : (
               <div className="container__playlists_loading">

@@ -6,6 +6,16 @@ export const DEFAULT_CONTEXT_APP = {
   selectedVideo: null,
   navBar: false,
   activePlaylist: '',
+  manualIds: {
+    recentUploads: {
+      id: 'recentUploads01',
+      title: 'RECENT UPLOADS',
+    },
+    allVideos: {
+      id: 'allVideos02',
+      title: 'ALL VIDEOS',
+    },
+  },
   toggleNavBar: () => {},
   setSelectedVideo: () => {},
   setActivePage: () => {},

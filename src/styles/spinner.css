@@ -1,5 +1,6 @@
 .spinner {
   width: fit-content;
+  height: fit-content;
   color: #e50914;
   animation: spin;
   animation-duration: 1s;

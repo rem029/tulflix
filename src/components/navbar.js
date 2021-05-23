@@ -12,11 +12,21 @@ import Spinner from './ui/spinner';
 const NavBar = () => {
   return (
     <ContextApp.Consumer>
-      {({ navBar, toggleNavBar, activePlaylist, setSelectedVideo, playlists }) => {
+      {({ navBar, toggleNavBar, activePlaylist, setSelectedVideo, playlists, manualIds }) => {
         const navBarStyle = navBar ? 'navbar navbar-open' : 'navbar';
         const navBarArrow = navBar ? 'container__navbar__arrow arrow-up' : 'container__navbar__arrow';
 
         /* LOAD PLAYLIST */
+        /* MANUAL PLAYLIST */
+        const manualList = [
+          <NavBarLink
+            key={manualIds.recentUploads.id + 'navbar'}
+            playlistId={manualIds.recentUploads.id}
+            href="src"
+            text={manualIds.recentUploads.title}
+            isActive={manualIds.recentUploads.id === activePlaylist}
+          />,
+        ];
 
         const list = !playlists.loading ? (
           playlists.results.map((item) => {
@@ -54,7 +64,10 @@ const NavBar = () => {
                 <FontAwesomeIcon icon={faCaretUp} />
               </em>
               <nav>
-                <ul>{list}</ul>
+                <ul>
+                  {manualList}
+                  {list}
+                </ul>
               </nav>
             </div>
           </div>

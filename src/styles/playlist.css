@@ -12,6 +12,23 @@
   scroll-snap-type: y mandatory;
 }
 
+.container__playlist-nav-buttons {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-right: 20px;
+  height: fit-content;
+  display: flex;
+  flex-wrap: column wrap;
+}
+
+.container__playlist-nav-buttons > button {
+  background-color: #313131;
+  width: 36px;
+  height: 5px;
+  margin: 0 1px;
+}
+
 .container_playlist-title {
   margin: 15px 5px;
   display: flex;
@@ -68,8 +85,10 @@
 
 .container_playlist-items {
   display: flex;
-  flex-direction: row;
+  flex-flow: row nowrap;
+  align-items: center;
   overflow-x: scroll;
+  overflow-y: hidden;
   height: 100%;
 }
 
@@ -107,6 +126,26 @@
   visibility: visible;
   z-index: 8;
 }
+
+.playlist-loading {
+  background-color: #575757;
+  border-radius: 15px;
+  animation: flash;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes flash {
+  0%,
+  100% {
+    background-color: #1f1f1f;
+  }
+  50% {
+    background-color: #292929;
+  }
+}
+
+/* Scrollbar style */
 
 /* width */
 ::-webkit-scrollbar {

@@ -5,6 +5,11 @@
   margin: 0 5px;
   margin-bottom: 5px;
   border-radius: 5px;
+
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
 }
 
 .container__playlistitem > img {
@@ -13,4 +18,22 @@
   width: 100%;
   height: auto;
   cursor: pointer;
+}
+
+.playlistitem-loading {
+  background-color: #575757;
+  border-radius: 15px;
+  animation: flash;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes flash {
+  0%,
+  100% {
+    background-color: #444444;
+  }
+  50% {
+    background-color: #6e6e6e;
+  }
 }

@@ -3,9 +3,16 @@ import '../styles/playlistitem.css';
 import ContextApp from '../context/context.app';
 
 const PlaylistItem = ({ videoID, imgUrl }) => {
+  // const [componentLoaded, setComponentLoaded] = useState(false);
+
   if (!videoID || !imgUrl) {
     return null;
   }
+
+  const onComponentLoad = () => {
+    // setComponentLoaded(false);
+  };
+
   return (
     <ContextApp.Consumer>
       {({ setSelectedVideo }) => {
@@ -17,6 +24,9 @@ const PlaylistItem = ({ videoID, imgUrl }) => {
               onClick={(e) => {
                 e.preventDefault();
                 setSelectedVideo(videoID);
+              }}
+              onLoad={() => {
+                onComponentLoad();
               }}
             />
           </div>
