@@ -70,8 +70,9 @@ const Playlist = ({ title, playlistId, items = [] }) => {
       behavior: 'smooth',
       left: window.innerWidth * index,
     });
-    console.log('@GoTo Page SCROLL TO', window.innerWidth * index);
-    console.log('@GoTo Page SCROLL LEFT', playListItemsRef.current.scrollLeft);
+    // console.log('@GoTo Page SCROLL TO', window.innerWidth * index);
+    // console.log('@GoTo Page SCROLL LEFT', playListItemsRef.current.scrollLeft);
+    // console.log('@Goto Page SCROLL WIDTH', playListItemsRef.current.scrollWidth);
   };
 
   const onScrollPage = (e) => setScrolled(e.target.scrollLeft > 0);
@@ -85,6 +86,10 @@ const Playlist = ({ title, playlistId, items = [] }) => {
   };
 
   const updateNavButtons = (arrayLength = 0) => {
+    if (arrayLength === 1) {
+      arrayLength = 0;
+    }
+    // console.log(title, '@UPDATE NAV BUTTONS', arrayLength);
     let index;
     let newArray = [arrayLength];
     if (arrayLength > 0) {

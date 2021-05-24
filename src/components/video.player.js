@@ -14,7 +14,7 @@ const VideoPlayer = ({ videoID, title }) => {
     <div className="container__videoplayer">
       <iframe
         onLoad={(e) => {
-          console.log(e);
+          // console.log(e);
           onFrameLoad(e);
         }}
         className="iframe-responsive"

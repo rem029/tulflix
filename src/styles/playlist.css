@@ -16,15 +16,15 @@
   position: absolute;
   top: 0;
   right: 0;
-  margin-right: 20px;
-  height: fit-content;
+  margin-right: 5px;
+  height: 12px;
   display: flex;
   flex-wrap: column wrap;
 }
 
 .container__playlist-nav-buttons > button {
   background-color: #313131;
-  width: 36px;
+  width: 28px;
   height: 5px;
   margin: 0 1px;
 }
