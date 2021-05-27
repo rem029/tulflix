@@ -1,19 +1,19 @@
-import { createContext } from 'react';
+import { createContext } from "react";
 
-import { responseSchema } from '../services/useYoutubeAPI';
+import { responseSchema } from "../hooks/useYoutubeAPI";
 
 export const DEFAULT_CONTEXT_APP = {
   selectedVideo: null,
   navBar: false,
-  activePlaylist: '',
+  activePlaylist: "",
   manualIds: {
     recentUploads: {
-      id: 'recentUploads01',
-      title: 'RECENT UPLOADS',
+      id: "recentUploads01",
+      title: "RECENT UPLOADS",
     },
     allVideos: {
-      id: 'allVideos02',
-      title: 'ALL VIDEOS',
+      id: "allVideos02",
+      title: "ALL VIDEOS",
     },
   },
   toggleNavBar: () => {},

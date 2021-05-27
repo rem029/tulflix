@@ -1,21 +1,24 @@
-import ReactDOM from 'react-dom';
-import { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import ReactDOM from "react-dom";
+import { useEffect, useState } from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import './styles/app.css';
+import "./styles/app.css";
 
-import Header from './components/ui/header';
-import Homepage from './components/pages/home.page';
-import VideoModal from './components/video.modal';
-import ytAPI from './helpers/ytAPI';
+import Header from "./components/ui/header";
+import Homepage from "./components/pages/home.page";
+import VideoModal from "./components/video.modal";
+import ytAPI from "./helpers/ytAPI";
 
-import ContextApp, { DEFAULT_CONTEXT_APP } from './context/context.app';
+import ContextApp, { DEFAULT_CONTEXT_APP } from "./context/context.app";
 
 function App() {
   const [navBar, setNavBar] = useState(false);
   const [selectedVideoId, setSelectedVideoId] = useState(null);
 
-  const [channel, setChannel] = useState({ loaded: false, ...DEFAULT_CONTEXT_APP.channel });
+  const [channel, setChannel] = useState({
+    loaded: false,
+    ...DEFAULT_CONTEXT_APP.channel,
+  });
   const [channelActivities, setChannelActivities] = useState({
     loaded: false,
     ...DEFAULT_CONTEXT_APP.channelActivities,
@@ -30,7 +33,8 @@ function App() {
 
   useEffect(() => {}, [playlistItems]);
 
-  const onAddPlaylistItem = (items) => setPlaylistItems((prevState) => [...prevState, ...items]);
+  const onAddPlaylistItem = (items) =>
+    setPlaylistItems((prevState) => [...prevState, ...items]);
 
   const onToggleNavBar = () => setNavBar((state) => !state);
 
@@ -44,13 +48,20 @@ function App() {
   const getPlaylists = ytAPI.GetPlaylists();
   const getChannelActivities = ytAPI.GetChannelActivity();
 
-  LoadDataFromYtAPI(getChannel, channel, updateChannel);
-  LoadDataFromYtAPI(getChannelActivities, channelActivities, updateChannelActivities);
-  LoadDataFromYtAPI(getPlaylists, playlists, updatePlaylists);
+  useDataFromYtAPI(getChannel, channel, updateChannel);
+  useDataFromYtAPI(
+    getChannelActivities,
+    channelActivities,
+    updateChannelActivities
+  );
+  useDataFromYtAPI(getPlaylists, playlists, updatePlaylists);
 
   const videoInfo =
     selectedVideoId !== null &&
-    ReactDOM.createPortal(<VideoModal videoId={selectedVideoId} />, document.getElementById('root-video-info'));
+    ReactDOM.createPortal(
+      <VideoModal videoId={selectedVideoId} />,
+      document.getElementById("root-video-info")
+    );
 
   return (
     <ContextApp.Provider
@@ -68,7 +79,7 @@ function App() {
       }}
     >
       <div className="app">
-        <Router basename={'/'}>
+        <Router basename={"/"}>
           <Header />
 
           <Switch>
@@ -78,17 +89,21 @@ function App() {
           </Switch>
         </Router>
       </div>
-
       {videoInfo}
     </ContextApp.Provider>
   );
 }
 
-const LoadDataFromYtAPI = (data, state, setState) => {
+const useDataFromYtAPI = (data, state, setState) => {
   useEffect(() => {
     if (!state.loaded) {
       if ((!data.loading && data.results.length > 0) || data.error) {
-        setState({ loaded: true, loading: data.loading, results: data.results, error: data.error });
+        setState({
+          loaded: true,
+          loading: data.loading,
+          results: data.results,
+          error: data.error,
+        });
       }
     }
   }, [data, state, setState]);
