@@ -1,32 +1,33 @@
-import '../styles/navbar.link.css';
+import { useContext } from "react";
+import "../styles/navbar.link.css";
 
-import ContextApp from '../context/context.app';
+import { navBarContext } from "../context/navBarProvider";
+import { selectVideoContext } from "../context/selectedVideoProvider";
 
 const NavBarLink = ({ playlistId, href, text, isActive }) => {
-  const navbarLinkStyle = isActive ? 'navbar-link navbar-link-active' : 'navbar-link';
+  const { toggleNavBar } = useContext(navBarContext);
+  const { setSelectedVideoId } = useContext(selectVideoContext);
+
+  const navbarLinkStyle = isActive
+    ? "navbar-link navbar-link-active"
+    : "navbar-link";
   const scrollToView = (e) => {
     e.preventDefault();
     document.getElementById(`#${playlistId}`).scrollIntoView();
   };
   return (
-    <ContextApp.Consumer>
-      {({ toggleNavBar, setSelectedVideo }) => {
-        return (
-          <li className={navbarLinkStyle}>
-            <a
-              href={href}
-              onClick={(e) => {
-                scrollToView(e);
-                setSelectedVideo(null);
-                toggleNavBar();
-              }}
-            >
-              {text}
-            </a>
-          </li>
-        );
-      }}
-    </ContextApp.Consumer>
+    <li className={navbarLinkStyle}>
+      <a
+        href={href}
+        onClick={(e) => {
+          scrollToView(e);
+          setSelectedVideoId(null);
+          toggleNavBar();
+        }}
+      >
+        {text}
+      </a>
+    </li>
   );
 };
 

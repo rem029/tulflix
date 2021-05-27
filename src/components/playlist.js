@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useContext } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -20,6 +20,7 @@ const Playlist = ({ title, playlistId, items = [] }) => {
   const [componentLoaded, setComponentLoaded] = useState(false);
   const [navButtons, setNavButtons] = useState([]);
   const [numOfNavButtons, setNumOfNavButtons] = useState(0);
+  const [activeNav, setActiveNav] = useState(-1);
   const getPlaylistItems = loadPlaylistItems(playlistId, items);
 
   useEffect(() => {
@@ -37,10 +38,9 @@ const Playlist = ({ title, playlistId, items = [] }) => {
 
   useEffect(() => {
     updateNavButtons(numOfNavButtons);
+    setActiveNav(0);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [numOfNavButtons]);
-
-  useEffect(() => {}, [navButtons]);
 
   useEffect(() => {
     if (!getPlaylistItems.loading && playlistItems.length === 0) {
@@ -67,13 +67,11 @@ const Playlist = ({ title, playlistId, items = [] }) => {
 
   const goToPage = (e, index) => {
     e.preventDefault();
+    setActiveNav(index);
     playListItemsRef.current.scrollTo({
       behavior: "smooth",
       left: window.innerWidth * index,
     });
-    // console.log('@GoTo Page SCROLL TO', window.innerWidth * index);
-    // console.log('@GoTo Page SCROLL LEFT', playListItemsRef.current.scrollLeft);
-    // console.log('@Goto Page SCROLL WIDTH', playListItemsRef.current.scrollWidth);
   };
 
   const onScrollPage = (e) => setScrolled(e.target.scrollLeft > 0);
@@ -98,12 +96,7 @@ const Playlist = ({ title, playlistId, items = [] }) => {
     if (arrayLength > 0) {
       for (index = 0; index <= arrayLength; index++) {
         const id = index;
-        newArray[index] = (
-          <button
-            key={"navButton" + id}
-            onClick={(e) => goToPage(e, id)}
-          ></button>
-        );
+        newArray[index] = id;
       }
       setNavButtons(newArray);
     }
@@ -139,7 +132,23 @@ const Playlist = ({ title, playlistId, items = [] }) => {
 
       {
         <div className="container__playlist-nav-buttons">
-          {navButtons.length > 0 && navButtons.map((nav) => nav)}
+          {navButtons.length > 0 &&
+            navButtons.map((navId) => {
+              return (
+                <button
+                  key={navId}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    goToPage(e, navId);
+                  }}
+                  className={
+                    activeNav === navId
+                      ? "container__playlist-nav-buttons-active"
+                      : ""
+                  }
+                ></button>
+              );
+            })}
         </div>
       }
 

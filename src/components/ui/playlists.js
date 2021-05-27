@@ -1,8 +1,7 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 
 import Playlist from "../playlist";
 import Spinner from "../ui/spinner";
-import ContextApp from "../../context/context.app";
 
 import { playlistsContext } from "../../context/playlistsProvider";
 import { channelActivitiesContext } from "../../context/channelActivitiesProvider";
@@ -13,14 +12,9 @@ const Playlists = () => {
   const { playlists, manualPlaylists } = useContext(playlistsContext);
   const { channelActivities } = useContext(channelActivitiesContext);
 
-  useEffect(() => {
-    console.log("@PLAYLISTS USE EFFECT");
-    console.table(channelActivities);
-  }, [channelActivities]);
-
   return (
     <div className="container__playlists">
-      {/* {!channelActivities && !channelActivities.loading ? (
+      {!channelActivities.loading && channelActivities.results.length > 0 ? (
         <React.Fragment>
           <Playlist
             title={manualPlaylists.recentUploads.title}
@@ -34,7 +28,7 @@ const Playlists = () => {
         </div>
       )}
 
-      {!playlists ? (
+      {!playlists.loading && playlists.results.length > 0 ? (
         <React.Fragment>
           {playlists.results.map((item) => {
             return (
@@ -50,7 +44,7 @@ const Playlists = () => {
         <div className="container__playlists_loading">
           <Spinner className="spinner-lg" />
         </div>
-      )} */}
+      )}
     </div>
   );
 };

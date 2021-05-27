@@ -1,5 +1,4 @@
 import { createContext, useState } from "react";
-import { act } from "react-dom/test-utils";
 
 export const navBarContext = createContext({
   navBar: false,

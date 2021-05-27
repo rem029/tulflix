@@ -1,18 +1,18 @@
 import { createContext, useState } from "react";
 
 export const selectVideoContext = createContext({
-  selectedVideo: "",
-  setSelectedVideo: () => {},
+  selectedVideoId: null,
+  setSelectedVideoId: () => {},
 });
 
 const SelectedVideoProvider = (props) => {
-  const [selectedVideo, setSelectedVideo] = useState();
+  const [selectedVideoId, setSelectedVideoId] = useState(null);
 
   return (
     <selectVideoContext.Provider
       value={{
-        selectedVideo: selectedVideo,
-        setSelectedVideo: setSelectedVideo,
+        selectedVideoId: selectedVideoId,
+        setSelectedVideoId: setSelectedVideoId,
       }}
     >
       {props.children}

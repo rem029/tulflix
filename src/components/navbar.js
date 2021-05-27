@@ -1,9 +1,8 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown, faCaretUp } from "@fortawesome/free-solid-svg-icons";
 
 import NavBarLink from "../components/navbar.link";
-import ContextApp from "../context/context.app.js";
 
 import { navBarContext } from "../context/navBarProvider";
 import { playlistsContext } from "../context/playlistsProvider";
@@ -15,7 +14,7 @@ import Spinner from "./ui/spinner";
 const NavBar = () => {
   const { navBar, toggleNavBar, activePlaylist } = useContext(navBarContext);
   const { playlists, manualPlaylists } = useContext(playlistsContext);
-  const { setSelectedVideo } = useContext(selectVideoContext);
+  const { setSelectedVideoId } = useContext(selectVideoContext);
 
   const navBarStyle = navBar ? "navbar navbar-open" : "navbar";
   const navBarArrow = navBar
@@ -58,7 +57,7 @@ const NavBar = () => {
         onClick={(e) => {
           e.preventDefault();
           toggleNavBar();
-          setSelectedVideo();
+          setSelectedVideoId(null);
         }}
       >
         Browse

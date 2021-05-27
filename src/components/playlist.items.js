@@ -1,38 +1,36 @@
-import '../styles/playlistitem.css';
+import { useContext, useState } from "react";
+import "../styles/playlistitem.css";
 
-import ContextApp from '../context/context.app';
+import { selectVideoContext } from "../context/selectedVideoProvider";
+import Spinner from "./ui/spinner";
 
 const PlaylistItem = ({ videoID, imgUrl }) => {
-  // const [componentLoaded, setComponentLoaded] = useState(false);
+  const [componentLoaded, setComponentLoaded] = useState(false);
+  const { setSelectedVideoId } = useContext(selectVideoContext);
 
   if (!videoID || !imgUrl) {
     return null;
   }
 
-  const onComponentLoad = () => {
-    // setComponentLoaded(false);
+  const onComponentLoad = (e) => {
+    setComponentLoaded(true);
   };
 
   return (
-    <ContextApp.Consumer>
-      {({ setSelectedVideo }) => {
-        return (
-          <div className="container__playlistitem">
-            <img
-              src={imgUrl}
-              alt={videoID}
-              onClick={(e) => {
-                e.preventDefault();
-                setSelectedVideo(videoID);
-              }}
-              onLoad={() => {
-                onComponentLoad();
-              }}
-            />
-          </div>
-        );
-      }}
-    </ContextApp.Consumer>
+    <div className="container__playlistitem">
+      <img
+        src={imgUrl}
+        alt={videoID}
+        onClick={(e) => {
+          e.preventDefault();
+          setSelectedVideoId(videoID);
+        }}
+        onLoad={(e) => {
+          onComponentLoad(e);
+        }}
+      />
+      {!componentLoaded && <Spinner className="spinner-md" />}
+    </div>
   );
 };
 
