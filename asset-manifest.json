@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/tulflix/static/css/main.463cf4ae.chunk.css",
-    "main.js": "/tulflix/static/js/main.3fb69876.chunk.js",
-    "main.js.map": "/tulflix/static/js/main.3fb69876.chunk.js.map",
+    "main.js": "/tulflix/static/js/main.854beaea.chunk.js",
+    "main.js.map": "/tulflix/static/js/main.854beaea.chunk.js.map",
     "runtime-main.js": "/tulflix/static/js/runtime-main.ce830731.js",
     "runtime-main.js.map": "/tulflix/static/js/runtime-main.ce830731.js.map",
     "static/js/2.03c54d2b.chunk.js": "/tulflix/static/js/2.03c54d2b.chunk.js",
@@ -19,6 +19,6 @@
     "static/js/runtime-main.ce830731.js",
     "static/js/2.03c54d2b.chunk.js",
     "static/css/main.463cf4ae.chunk.css",
-    "static/js/main.3fb69876.chunk.js"
+    "static/js/main.854beaea.chunk.js"
   ]
 }
