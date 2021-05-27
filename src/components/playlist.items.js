@@ -16,6 +16,7 @@ const PlaylistItem = ({ videoID, imgUrl }) => {
     setComponentLoaded(true);
   };
 
+  /* {!componentLoaded && <Spinner className="spinner-md" />} */
   return (
     <div className="container__playlistitem">
       <img
@@ -29,7 +30,6 @@ const PlaylistItem = ({ videoID, imgUrl }) => {
           onComponentLoad(e);
         }}
       />
-      {!componentLoaded && <Spinner className="spinner-md" />}
     </div>
   );
 };
