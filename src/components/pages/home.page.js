@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { useState } from 'react/cjs/react.development';
+import { useState } from 'react';
 
 import LogoFull from '../../assets/logo/tulflix_logo-full.png';
 
