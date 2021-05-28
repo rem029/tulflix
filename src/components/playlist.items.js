@@ -1,35 +1,17 @@
-import { useContext, useState } from "react";
-import "../styles/playlistitem.css";
-
-import { selectVideoContext } from "../context/selectedVideoProvider";
-import Spinner from "./ui/spinner";
+import { useContext } from 'react';
+import { Link } from 'react-router-dom';
+import '../styles/playlistitem.css';
 
 const PlaylistItem = ({ videoID, imgUrl }) => {
-  const [componentLoaded, setComponentLoaded] = useState(false);
-  const { setSelectedVideoId } = useContext(selectVideoContext);
-
   if (!videoID || !imgUrl) {
     return null;
   }
 
-  const onComponentLoad = (e) => {
-    setComponentLoaded(true);
-  };
-
-  /* {!componentLoaded && <Spinner className="spinner-md" />} */
   return (
     <div className="container__playlistitem">
-      <img
-        src={imgUrl}
-        alt={videoID}
-        onClick={(e) => {
-          e.preventDefault();
-          setSelectedVideoId(videoID);
-        }}
-        onLoad={(e) => {
-          onComponentLoad(e);
-        }}
-      />
+      <Link to={`/browse/${videoID}`}>
+        <img src={imgUrl} alt={videoID} />
+      </Link>
     </div>
   );
 };

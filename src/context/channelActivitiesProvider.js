@@ -1,8 +1,8 @@
-import { createContext, useState } from "react";
+import { createContext, useState } from 'react';
 
-import ytAPI from "../helpers/ytAPI";
-import useDataFromYtAPI from "../hooks/useDataFromYtAPI";
-import { responseSchema } from "../hooks/useYoutubeAPI";
+import ytAPI from '../helpers/ytAPI';
+import useDataFromYtAPI from '../hooks/useDataFromYtAPI';
+import { responseSchema } from '../hooks/useYoutubeAPI';
 
 export const channelActivitiesContext = createContext({
   channelActivities: responseSchema,
@@ -11,15 +11,10 @@ export const channelActivitiesContext = createContext({
 
 const ChannelActivitiesProvider = (props) => {
   const [channelActivities, setChannelActivities] = useState(responseSchema);
-  console.log("@Provider Channel Act");
 
   const getChannelActivities = ytAPI.GetChannelActivity();
   const updateChannelActivities = (state) => setChannelActivities(state);
-  useDataFromYtAPI(
-    getChannelActivities,
-    channelActivities,
-    updateChannelActivities
-  );
+  useDataFromYtAPI(getChannelActivities, channelActivities, updateChannelActivities);
   return (
     <channelActivitiesContext.Provider
       value={{

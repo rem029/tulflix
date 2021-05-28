@@ -1,14 +1,32 @@
-import React from 'react';
-import Featured from '../ui/featured';
-import Playlists from '../ui/playlists';
+import { Link } from 'react-router-dom';
+import { useState } from 'react/cjs/react.development';
 
-const Homepage = () => {
+import LogoFull from '../../assets/logo/tulflix_logo-full.png';
+
+import '../../styles/home.page.css';
+
+const HomePage = () => {
+  const [imgLoaded, setImgLoaded] = useState(false);
+
+  const onImgLoad = () => setImgLoaded(true);
+
+  const imgClass = imgLoaded ? 'container__homepage-img img-show' : 'container__homepage-img';
   return (
-    <React.Fragment>
-      <Featured />
-      <Playlists />
-    </React.Fragment>
+    <div className="container__homepage">
+      <img
+        className={imgClass}
+        src={LogoFull}
+        alt={LogoFull}
+        onLoad={() => {
+          onImgLoad();
+        }}
+      />
+      <p className="container__homepage-sub-text">Watch Tulfo and chill</p>
+      <Link className="container__homepage-btn" to="/browse/">
+        Start Watching
+      </Link>
+    </div>
   );
 };
 
-export default Homepage;
+export default HomePage;

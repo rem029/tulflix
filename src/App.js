@@ -1,45 +1,43 @@
-import ReactDOM from "react-dom";
-import { useContext, useEffect } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { HashRouter as Router, Switch, Route } from 'react-router-dom';
 
-import "./styles/app.css";
+import './styles/app.css';
 
-import Header from "./components/ui/header";
-import Homepage from "./components/pages/home.page";
-import VideoModal from "./components/video.modal";
+import HomePage from './components/pages/home.page';
+import NotFoundPage from './components/pages/notfound.page';
+import BrowsePage from './components/pages/browse.page';
+import Footer from './components/ui/footer';
 
-import { selectVideoContext } from "./context/selectedVideoProvider";
+import VideoModal from './components/video.modal';
+import React from 'react';
 
 function App() {
-  const { selectedVideoId } = useContext(selectVideoContext);
-
-  useEffect(() => {
-    console.log("@App Re-render");
-  });
-
-  useEffect(() => {
-    console.log("@App selectedVideoId", selectedVideoId);
-  }, [selectedVideoId]);
-
-  const videoInfo =
-    selectedVideoId !== null &&
-    ReactDOM.createPortal(
-      <VideoModal videoId={selectedVideoId} />,
-      document.getElementById("root-video-info")
-    );
-
   return (
     <div className="app">
-      <Router basename={"/"}>
-        <Header />
-
+      <Router basename={'/'}>
         <Switch>
-          <Route path="/">
-            <Homepage />
+          <Route
+            path={['/browse/:videoId', '/browse']}
+            component={(props) => (
+              <React.Fragment>
+                {props.match.params.videoId && <VideoModal {...props} videoId={props.match.params.videoId} />}
+                <BrowsePage />
+              </React.Fragment>
+            )}
+          />
+
+          <Route path="/browse">
+            <BrowsePage />
           </Route>
+
+          <Route exact path="/">
+            <HomePage />
+          </Route>
+
+          <Route component={NotFoundPage} />
         </Switch>
       </Router>
-      {videoInfo}
+
+      <Footer />
     </div>
   );
 }

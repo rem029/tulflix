@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useState } from 'react';
 
 export const navBarContext = createContext({
   navBar: false,
@@ -13,7 +13,6 @@ const NavBarProvider = (props) => {
 
   const toggleNavBar = () => setNavBar((state) => !state);
 
-  console.log("@Provider NavBar");
   return (
     <navBarContext.Provider
       value={{

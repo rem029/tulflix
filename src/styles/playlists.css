@@ -1,5 +1,6 @@
 .container__playlists {
   margin: 10px 0;
+  margin-bottom: 100px;
   width: 100%;
   display: flex;
   flex-direction: column;

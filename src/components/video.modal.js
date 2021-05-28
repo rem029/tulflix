@@ -1,29 +1,30 @@
-import { useContext, useEffect, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faThumbsUp, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { useContext, useEffect, useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faThumbsUp, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
 
-import TulflixIcon from "../assets/logo/tulflix_logo-icon.png";
+import TulflixIcon from '../assets/logo/tulflix_logo-icon.png';
 
-import abbreviateNum from "../utils/abbreviateNum";
+import abbreviateNum from '../utils/abbreviateNum';
 
-import Backdrop from "./ui/backdrop";
-import Spinner from "./ui/spinner";
-import VideoPlayer from "./video.player";
+import Backdrop from './ui/backdrop';
+import Spinner from './ui/spinner';
+import VideoPlayer from './video.player';
 
-import "../styles/video.modal.css";
-import ytAPI from "../helpers/ytAPI";
+import '../styles/video.modal.css';
+import ytAPI from '../helpers/ytAPI';
 
-import { selectVideoContext } from "../context/selectedVideoProvider";
+import { selectVideoContext } from '../context/selectedVideoProvider';
 
 const VideoModal = ({ videoId }) => {
   const [data, setData] = useState({
-    id: "",
-    title: "",
-    imgUrl: "",
+    id: '',
+    title: '',
+    imgUrl: '',
     datePublished: new Date(),
-    likeCount: "",
-    viewCount: "",
-    description: "",
+    likeCount: '',
+    viewCount: '',
+    description: '',
   });
 
   const { setSelectedVideoId } = useContext(selectVideoContext);
@@ -31,12 +32,14 @@ const VideoModal = ({ videoId }) => {
   const video = ytAPI.GetVideoInfo(videoId);
 
   useEffect(() => {
-    if (
-      !video.loading &&
-      video.result !== null &&
-      video.error === null &&
-      data.id === ""
-    ) {
+    setSelectedVideoId(videoId);
+    return () => {
+      setSelectedVideoId(null);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!video.loading && video.result !== null && video.error === null && data.id === '') {
       setData({
         id: video.results[0].id,
         title: video.results[0].snippet.title,
@@ -50,17 +53,12 @@ const VideoModal = ({ videoId }) => {
   }, [video, data]);
 
   return (
-    <Backdrop>
+    <Backdrop onClick={() => {}}>
       <div className="container__video-modal">
         <div className="container__video-modal__close-btn">
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              setSelectedVideoId(null);
-            }}
-          >
+          <Link to="/browse">
             <FontAwesomeIcon icon={faTimes} />
-          </button>
+          </Link>
         </div>
         <div className="container__video-modal__info">
           <div className="info-img">
@@ -71,7 +69,7 @@ const VideoModal = ({ videoId }) => {
           </div>
 
           {video.loading ? (
-            <Spinner className={"spinner-lg"} />
+            <Spinner className={'spinner-lg'} />
           ) : (
             <div className="info-text">
               <div className="info-text-date">
@@ -97,6 +95,9 @@ const VideoModal = ({ videoId }) => {
                 <h2>SERIES</h2>
               </div>
               <h2>{data.title}</h2>
+
+              <hr className="line__grey" />
+              <hr className="line__red" />
 
               <pre className="info-desc">{data.description}</pre>
             </div>

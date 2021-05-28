@@ -1,46 +1,37 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from 'react';
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faAngleRight,
-  faChevronRight,
-  faChevronLeft,
-} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAngleRight, faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 
-import PlaylistItem from "./playlist.items";
+import PlaylistItem from './playlist.items';
 
-import ytApi from "../helpers/ytAPI.js";
+import ytApi from '../helpers/ytAPI.js';
 
-import "../styles/playlist.css";
+import '../styles/playlist.css';
 
 const Playlist = ({ title, playlistId, items = [] }) => {
-  const playListItemsRef = useRef(null);
   const [scrolled, setScrolled] = useState(false);
   const [playlistItems, setPlaylistItems] = useState(items);
-  const [componentLoaded, setComponentLoaded] = useState(false);
   const [navButtons, setNavButtons] = useState([]);
-  const [numOfNavButtons, setNumOfNavButtons] = useState(0);
   const [activeNav, setActiveNav] = useState(-1);
+
+  const playListItemsRef = useRef(null);
   const getPlaylistItems = loadPlaylistItems(playlistId, items);
 
   useEffect(() => {
-    window.addEventListener("resize", onWindowResize);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [playListItemsRef]);
+    window.addEventListener('resize', onWindowResize);
+    return () => {
+      window.removeEventListener('resize', onWindowResize);
+    };
+  }, []);
 
   useEffect(() => {
-    if (componentLoaded) {
+    if (playListItemsRef) {
       onWindowResize();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [componentLoaded]);
+  }, [playListItemsRef]);
 
-  useEffect(() => {
-    updateNavButtons(numOfNavButtons);
-    setActiveNav(0);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [numOfNavButtons]);
+  useEffect(() => {}, [navButtons]);
 
   useEffect(() => {
     if (!getPlaylistItems.loading && playlistItems.length === 0) {
@@ -52,7 +43,7 @@ const Playlist = ({ title, playlistId, items = [] }) => {
   const nextPage = (e) => {
     e.preventDefault();
     playListItemsRef.current.scrollTo({
-      behavior: "smooth",
+      behavior: 'smooth',
       left: window.innerWidth + playListItemsRef.current.scrollLeft,
     });
   };
@@ -60,7 +51,7 @@ const Playlist = ({ title, playlistId, items = [] }) => {
   const prevPage = (e) => {
     e.preventDefault();
     playListItemsRef.current.scrollTo({
-      behavior: "smooth",
+      behavior: 'smooth',
       left: playListItemsRef.current.scrollLeft - window.innerWidth,
     });
   };
@@ -69,20 +60,21 @@ const Playlist = ({ title, playlistId, items = [] }) => {
     e.preventDefault();
     setActiveNav(index);
     playListItemsRef.current.scrollTo({
-      behavior: "smooth",
+      behavior: 'smooth',
       left: window.innerWidth * index,
     });
+
+    console.log('SCROLL TO', window.innerWidth * index);
+    console.log('SCROLL WIDTH', playListItemsRef.current.scrollWidth);
   };
 
   const onScrollPage = (e) => setScrolled(e.target.scrollLeft > 0);
 
-  const onLoad = () => setComponentLoaded(true);
-
   const onWindowResize = () => {
-    if (componentLoaded) {
-      setNumOfNavButtons(
-        Math.round(playListItemsRef.current.scrollWidth / window.innerWidth)
-      );
+    if (playListItemsRef) {
+      if (playListItemsRef.current) {
+        updateNavButtons(Math.round(playListItemsRef.current.scrollWidth / window.innerWidth));
+      }
     }
   };
 
@@ -90,9 +82,8 @@ const Playlist = ({ title, playlistId, items = [] }) => {
     if (arrayLength === 1) {
       arrayLength = 0;
     }
-    // console.log(title, '@UPDATE NAV BUTTONS', arrayLength);
     let index;
-    let newArray = [arrayLength];
+    let newArray = [arrayLength - 1];
     if (arrayLength > 0) {
       for (index = 0; index <= arrayLength; index++) {
         const id = index;
@@ -113,19 +104,13 @@ const Playlist = ({ title, playlistId, items = [] }) => {
   return (
     <div className="container_playlist">
       {scrolled && (
-        <button
-          onClick={(e) => prevPage(e)}
-          className="container__playlist__control control-left"
-        >
+        <button onClick={(e) => prevPage(e)} className="container__playlist__control control-left">
           <FontAwesomeIcon icon={faChevronLeft} />
         </button>
       )}
 
       {showScrollNext && (
-        <button
-          onClick={(e) => nextPage(e)}
-          className="container__playlist__control control-right"
-        >
+        <button onClick={(e) => nextPage(e)} className="container__playlist__control control-right">
           <FontAwesomeIcon icon={faChevronRight} />
         </button>
       )}
@@ -141,11 +126,7 @@ const Playlist = ({ title, playlistId, items = [] }) => {
                     e.preventDefault();
                     goToPage(e, navId);
                   }}
-                  className={
-                    activeNav === navId
-                      ? "container__playlist-nav-buttons-active"
-                      : ""
-                  }
+                  className={activeNav === navId ? 'container__playlist-nav-buttons-active' : ''}
                 ></button>
               );
             })}
@@ -160,17 +141,11 @@ const Playlist = ({ title, playlistId, items = [] }) => {
         </div>
       </div>
       <div
-        className={
-          "container_playlist-items " +
-          (!componentLoaded && " playlist-loading")
-        }
+        className={'container_playlist-items ' + (!playListItemsRef && ' playlist-loading')}
         id={`#${playlistId}`}
         ref={playListItemsRef}
         onScroll={(e) => {
           onScrollPage(e);
-        }}
-        onLoad={() => {
-          onLoad();
         }}
       >
         <React.Fragment>

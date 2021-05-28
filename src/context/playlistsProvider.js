@@ -1,8 +1,8 @@
-import { createContext, useState } from "react";
+import { createContext, useState } from 'react';
 
-import ytAPI from "../helpers/ytAPI";
-import useDataFromYtAPI from "../hooks/useDataFromYtAPI";
-import { responseSchema } from "../hooks/useYoutubeAPI";
+import ytAPI from '../helpers/ytAPI';
+import useDataFromYtAPI from '../hooks/useDataFromYtAPI';
+import { responseSchema } from '../hooks/useYoutubeAPI';
 
 export const playlistsContext = createContext({
   playlists: responseSchema,
@@ -12,7 +12,6 @@ export const playlistsContext = createContext({
 
 const PlaylistsProvider = (props) => {
   const [playlists, setPlaylists] = useState(responseSchema);
-  console.log("@Provider Playlists");
 
   const getPlaylists = ytAPI.GetPlaylists();
   const updatePlaylists = (state) => setPlaylists(state);
@@ -25,12 +24,12 @@ const PlaylistsProvider = (props) => {
         setPlaylists: setPlaylists,
         manualPlaylists: {
           recentUploads: {
-            id: "recentUploads01",
-            title: "RECENT UPLOADS",
+            id: 'recentUploads01',
+            title: 'RECENT UPLOADS',
           },
           allVideos: {
-            id: "allVideos02",
-            title: "ALL VIDEOS",
+            id: 'allVideos02',
+            title: 'ALL VIDEOS',
           },
         },
       }}

@@ -12,12 +12,17 @@
   justify-content: center;
 }
 
-.container__playlistitem > img {
+.container__playlistitem > a {
   position: absolute;
-  border-radius: 5px;
+  width: 100%;
+  height: fit-content;
+}
+
+.container__playlistitem > a > img {
   width: 100%;
   height: auto;
   cursor: pointer;
+  border-radius: 5px;
 }
 
 .playlistitem-loading {

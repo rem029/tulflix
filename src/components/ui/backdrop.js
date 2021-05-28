@@ -4,7 +4,15 @@ import '../../styles/backdrop.css';
 
 const Backdrop = (props) => {
   return ReactDOM.createPortal(
-    <div className="container__backdrop">{props.children}</div>,
+    <div
+      onClick={(e) => {
+        e.preventDefault();
+        props.onClick();
+      }}
+      className="container__backdrop"
+    >
+      {props.children}
+    </div>,
     document.getElementById('root-video-info')
   );
 };
