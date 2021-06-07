@@ -1,0 +1,8 @@
+[build]
+  command = "yarn build"
+  publish = "build"
+
+[context.production.environment]
+  TOML_ENV_VAR = "From netlify.toml"
+  REACT_APP_TOML_ENV_VAR = "From netlify.toml (REACT_APP_)"
+  REACT_APP_KEY = "AIzaSyDUkHcEDn8jnLFItqrvJ9ZCXt8qbMX-Kbo"
