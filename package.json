@@ -2,7 +2,6 @@
   "name": "tulflix",
   "version": "0.2.0",
   "private": true,
-  "homepage": "http://rem029.github.io/tulflix",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.35",
     "@fortawesome/free-brands-svg-icons": "^5.15.3",
